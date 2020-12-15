@@ -1,5 +1,4 @@
 const { spawn } = require('node-pty')
-const { ReadStream } = require('tty')
 const { performance } = require('perf_hooks')
 
 for (let i = 0; i < 5; i++) {
@@ -10,7 +9,7 @@ for (let i = 0; i < 5; i++) {
 
   let i = 0
   term.onData((data) => {
-    if (++i == 2) {
+    if (++i == 1) {
       const e2 = performance.now()
       console.log({ data: e2 - s })
     }

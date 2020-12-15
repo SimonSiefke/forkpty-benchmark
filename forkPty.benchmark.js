@@ -11,7 +11,7 @@ for (let i = 0; i < 5; i++) {
   const readStream = new ReadStream(fd)
   let i = 0
   readStream.on('data', (data) => {
-    if (++i == 2) {
+    if (++i == 1) {
       const e2 = performance.now()
       console.log({ data: e2 - s })
     }
