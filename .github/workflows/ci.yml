@@ -18,5 +18,5 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run benchmark:fork-pty
       - run: npm run benchmark:node-pty
+      - run: npm run benchmark:fork-pty
