@@ -1,0 +1,16 @@
+{
+  "name": "fpty",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "benchmark": "node forkPty.benchmark.js && node nodePty.benchmark.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fork-pty": "^0.0.3",
+    "node-pty": "^0.9.0"
+  }
+}
