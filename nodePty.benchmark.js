@@ -7,9 +7,8 @@ for (let i = 0; i < 5; i++) {
   const e = performance.now()
   console.log({ spawn: e - s })
 
-  let i = 0
   term.onData((data) => {
-    if (++i == 1) {
+    if (data.startsWith('\\x1B')) {
       const e2 = performance.now()
       console.log({ data: e2 - s })
     }

@@ -9,9 +9,8 @@ for (let i = 0; i < 5; i++) {
   console.log({ spawn: e - s })
 
   const readStream = new ReadStream(fd)
-  let i = 0
   readStream.on('data', (data) => {
-    if (++i == 1) {
+    if (data.startsWith('\\x1B')) {
       const e2 = performance.now()
       console.log({ data: e2 - s })
     }
