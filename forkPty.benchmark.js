@@ -10,7 +10,7 @@ for (let i = 0; i < 5; i++) {
 
   const readStream = new ReadStream(fd)
   readStream.on('data', (data) => {
-    if (data.startsWith('\\x1B')) {
+    if (data.toString().startsWith('\\x1B')) {
       const e2 = performance.now()
       console.log({ data: e2 - s })
     }
