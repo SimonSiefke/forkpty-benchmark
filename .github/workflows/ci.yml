@@ -20,7 +20,5 @@ jobs:
       - run: npm ci
       - run: npm run benchmark:node-pty
       - run: npm run benchmark:fork-pty-and-execlp
-      - run: npm run benchmark:fork-pty-and-execvp
-      - run: npm run benchmark:node-pty
-      - run: npm run benchmark:fork-pty-and-execlp
+      - run: npm run benchmark:fork-pty-and-execlpe
       - run: npm run benchmark:fork-pty-and-execvp

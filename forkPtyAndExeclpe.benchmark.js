@@ -1,4 +1,5 @@
-const { spawn } = require('node-pty')
+const { forkPtyAndExeclpe } = require('fork-pty')
+const { ReadStream } = require('tty')
 const { performance } = require('perf_hooks')
 
 const terminators = ['$ ', '$ \x1B[0m']
@@ -8,10 +9,9 @@ const terminators = ['$ ', '$ \x1B[0m']
   for (let i = 0; i < 15; i++) {
     await new Promise((r) => {
       const s = performance.now()
-      const term = spawn('bash', ['-i'], {
-        env: { ...process.env },
-      })
-      term.onData((data) => {
+      const fd = forkPtyAndExeclpe('bash', '-i')
+      const readStream = new ReadStream(fd)
+      readStream.on('data', (data) => {
         console.log({ data: data.toString() })
         if (terminators.some((t) => data.toString().endsWith(t))) {
           const e2 = performance.now()

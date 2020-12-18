@@ -6,13 +6,14 @@
   "scripts": {
     "benchmark:node-pty": "node nodePty.benchmark.js",
     "benchmark:fork-pty-and-execlp": "node forkPtyAndExeclp.benchmark.js",
+    "benchmark:fork-pty-and-execlpe": "node forkPtyAndExeclpe.benchmark.js",
     "benchmark:fork-pty-and-execvp": "node forkPtyAndExecvp.benchmark.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fork-pty": "^0.0.4",
+    "fork-pty": "^0.0.5",
     "node-pty": "^0.9.0"
   }
 }
