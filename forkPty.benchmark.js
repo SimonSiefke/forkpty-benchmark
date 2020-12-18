@@ -2,16 +2,17 @@ const { forkPtyAndExeclp } = require('fork-pty')
 const { ReadStream } = require('tty')
 const { performance } = require('perf_hooks')
 
+const terminators = ['$ ', '$ \x1B[0m']
+
 ;(async () => {
   for (let i = 0; i < 15; i++) {
     await new Promise((r) => {
       const s = performance.now()
       const fd = forkPtyAndExeclp('bash', '-i')
-      let j = 0
       const readStream = new ReadStream(fd)
       readStream.on('data', (data) => {
         console.log({ data: data.toString() })
-        if (++j == 2) {
+        if (terminators.some((t) => data.toString().endsWith(t))) {
           const e2 = performance.now()
           console.log({ data: e2 - s })
           r()

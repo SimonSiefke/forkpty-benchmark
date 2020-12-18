@@ -1,15 +1,16 @@
 const { spawn } = require('node-pty')
 const { performance } = require('perf_hooks')
 
+const terminators = ['$ ', '$ \x1B[0m']
+
 ;(async () => {
   for (let i = 0; i < 15; i++) {
     await new Promise((r) => {
       const s = performance.now()
       const term = spawn('bash', ['-i'], {})
-      let j = 0
       term.onData((data) => {
         console.log({ data: data.toString() })
-        if (++j === 2) {
+        if (terminators.some((t) => data.toString().endsWith(t))) {
           const e2 = performance.now()
           console.log({ data: e2 - s })
           r()
