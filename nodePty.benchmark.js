@@ -1,21 +1,26 @@
 const { spawn } = require('node-pty')
 const { performance } = require('perf_hooks')
 
-for (let i = 0; i < 5; i++) {
-  const s = performance.now()
-  const term = spawn('/bin/bash', ['-i'])
-  const e = performance.now()
-  console.log({ spawn: e - s })
-
-  term.onData((data) => {
-    if (data.toString().startsWith('\x1B')) {
-      const e2 = performance.now()
-      console.log({ data: e2 - s })
-    }
-    console.log({ data: data.toString() })
-  })
-}
+;(async () => {
+  for (let i = 0; i < 15; i++) {
+    await new Promise((r) => {
+      const s = performance.now()
+      const term = spawn('bash', ['-i'], {})
+      let j = 0
+      term.onData((data) => {
+        console.log({ data: data.toString() })
+        if (++j === 2) {
+          const e2 = performance.now()
+          console.log({ data: e2 - s })
+          r()
+        }
+      })
+    })
+  }
+  process.exit(0)
+})()
 
 setTimeout(() => {
-  process.exit(0)
+  console.error('something went wrong')
+  process.exit(1)
 }, 15000)

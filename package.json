@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fork-pty": "^0.0.3",
+    "fork-pty": "^0.0.4",
     "node-pty": "^0.9.0"
   }
 }

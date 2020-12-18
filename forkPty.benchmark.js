@@ -1,23 +1,28 @@
-const { forkPty } = require('fork-pty')
+const { forkPtyAndExeclp } = require('fork-pty')
 const { ReadStream } = require('tty')
 const { performance } = require('perf_hooks')
 
-for (let i = 0; i < 5; i++) {
-  const s = performance.now()
-  const fd = forkPty()
-  const e = performance.now()
-  console.log({ spawn: e - s })
-
-  const readStream = new ReadStream(fd)
-  readStream.on('data', (data) => {
-    if (data.toString().startsWith('\x1B')) {
-      const e2 = performance.now()
-      console.log({ data: e2 - s })
-    }
-    console.log({ data: data.toString() })
-  })
-}
+;(async () => {
+  for (let i = 0; i < 15; i++) {
+    await new Promise((r) => {
+      const s = performance.now()
+      const fd = forkPtyAndExeclp('bash', '-i')
+      let j = 0
+      const readStream = new ReadStream(fd)
+      readStream.on('data', (data) => {
+        console.log({ data: data.toString() })
+        if (++j == 2) {
+          const e2 = performance.now()
+          console.log({ data: e2 - s })
+          r()
+        }
+      })
+    })
+  }
+  process.exit(0)
+})()
 
 setTimeout(() => {
-  process.exit(0)
+  console.error('something went wrong')
+  process.exit(1)
 }, 15000)
