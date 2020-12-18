@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "benchmark:node-pty": "node nodePty.benchmark.js",
-    "benchmark:fork-pty": "node forkPty.benchmark.js"
+    "benchmark:fork-pty-and-execlp": "node forkPtyAndExeclp.benchmark.js",
+    "benchmark:fork-pty-and-execvp": "node forkPtyAndExecvp.benchmark.js"
   },
   "keywords": [],
   "author": "",
