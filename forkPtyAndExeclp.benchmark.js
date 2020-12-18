@@ -12,8 +12,9 @@ const terminators = ['$ ', '$ \x1B[0m']
       const fd = forkPtyAndExeclp('bash', '-i')
       const readStream = new ReadStream(fd)
       readStream.on('data', (data) => {
-        console.log({ data: data.toString() })
-        if (terminators.some((t) => data.toString().endsWith(t))) {
+        const str = data.toString()
+        console.log({ data: str })
+        if (terminators.some((t) => str.endsWith(t))) {
           const e2 = performance.now()
           total += e2 - s
           console.log({ data: e2 - s })

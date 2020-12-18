@@ -12,8 +12,9 @@ const terminators = ['$ ', '$ \x1B[0m']
         env: { ...process.env },
       })
       term.onData((data) => {
-        console.log({ data: data.toString() })
-        if (terminators.some((t) => data.toString().endsWith(t))) {
+        const str = data.toString()
+        console.log({ data: str })
+        if (terminators.some((t) => str.endsWith(t))) {
           const e2 = performance.now()
           total += e2 - s
           console.log({ data: e2 - s })
