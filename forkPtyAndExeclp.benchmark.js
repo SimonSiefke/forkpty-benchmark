@@ -2,7 +2,7 @@ const { forkPtyAndExeclp } = require('fork-pty')
 const { ReadStream } = require('tty')
 const { performance } = require('perf_hooks')
 
-const terminators = ['$ ', '$ \x1B[0m']
+const terminators = ['$ ', '$ \x1B[0m', '# ']
 
 ;(async () => {
   let total = 0

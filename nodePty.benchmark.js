@@ -1,7 +1,7 @@
 const { spawn } = require('node-pty')
 const { performance } = require('perf_hooks')
 
-const terminators = ['$ ', '$ \x1B[0m']
+const terminators = ['$ ', '$ \x1B[0m', '# ']
 
 ;(async () => {
   let total = 0
