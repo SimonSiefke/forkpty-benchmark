@@ -1,27 +1,21 @@
 const { spawn } = require('node-pty')
 const { performance } = require('perf_hooks')
 
-const terminators = ['$ ', '$ \x1B[0m', '# ']
-
 ;(async () => {
   let total = 0
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 30; i++) {
+    const s = performance.now()
     await new Promise((r) => {
-      const s = performance.now()
-      const term = spawn('bash', ['-i'], {})
+      const term = spawn('ls', ['-l'], {})
       term.onData((data) => {
-        const str = data.toString()
-        console.log({ data: str })
-        if (terminators.some((t) => str.endsWith(t))) {
-          const e2 = performance.now()
-          total += e2 - s
-          console.log({ data: e2 - s })
-          r()
-        }
+        const e = performance.now()
+        total += e - s
+        term.kill()
+        r()
       })
     })
   }
-  console.log({ average: total / 15 })
+  console.log({ average: total / 30 })
   process.exit(0)
 })()
 
