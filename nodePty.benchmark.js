@@ -8,9 +8,7 @@ const terminators = ['$ ', '$ \x1B[0m', '# ']
   for (let i = 0; i < 15; i++) {
     await new Promise((r) => {
       const s = performance.now()
-      const term = spawn('bash', ['-i'], {
-        env: { ...process.env },
-      })
+      const term = spawn('bash', ['-i'], {})
       term.onData((data) => {
         const str = data.toString()
         console.log({ data: str })
