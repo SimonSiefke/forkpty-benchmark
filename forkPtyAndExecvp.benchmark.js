@@ -2,22 +2,31 @@ const { forkPtyAndExecvp } = require('fork-pty')
 const { ReadStream } = require('tty')
 const { performance } = require('perf_hooks')
 
+const RUNS = 15
+
 ;(async () => {
   let total = 0
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < RUNS; i++) {
     const s = performance.now()
     await new Promise((r) => {
-      const fd = forkPtyAndExecvp('ls', ['-l'])
-      const readStream = new ReadStream(fd)
-      readStream.on('data', (data) => {
-        const e = performance.now()
-        total += e - s
-        readStream.destroy()
-        r()
+      const fd = forkPtyAndExecvp('bash', ['bash', '-i'])
+      const stream = new ReadStream(fd, {
+        readable: true,
+        writable: true,
+      })
+      stream.write('ls -lR .\n')
+      stream.on('data', (data) => {
+        if (data.toString().includes('node-pty.d.ts')) {
+          const e = performance.now()
+          const time = e - s
+          console.log({ time })
+          total += time
+          r()
+        }
       })
     })
   }
-  console.log({ average: total / 100 })
+  console.log({ average: total / RUNS })
   process.exit(0)
 })()
 

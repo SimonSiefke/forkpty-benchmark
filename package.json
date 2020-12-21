@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "fork-pty": "^0.0.10",
     "node-pty": "^0.9.0"
