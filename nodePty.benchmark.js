@@ -3,7 +3,7 @@ const { performance } = require('perf_hooks')
 
 ;(async () => {
   let total = 0
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 100; i++) {
     const s = performance.now()
     await new Promise((r) => {
       const term = spawn('ls', ['-l'], {})
@@ -15,7 +15,7 @@ const { performance } = require('perf_hooks')
       })
     })
   }
-  console.log({ average: total / 30 })
+  console.log({ average: total / 100 })
   process.exit(0)
 })()
 
